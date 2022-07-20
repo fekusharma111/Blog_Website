@@ -98,7 +98,7 @@ const Login = () => {
       setError("Something Went Wrong!!!.. Please Try again");
     }
   };
-  /// main
+  /// main code
   return (
     <Component>
       <Box>
