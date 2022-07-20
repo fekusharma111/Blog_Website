@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Box, Button, TextField, Typography, styled } from "@mui/material";
 import { API } from "../../service/api";
+import { DataContext } from "../../context/DataProvider";
+import { useNavigate } from "react-router-dom";
+
 const Component = styled(Box)`
   width: 400px;
   margin: auto;
@@ -67,6 +70,8 @@ const Login = () => {
   const [signup, setSignup] = useState(signupInitialvalue);
   const [error, setError] = useState("");
   const [login, setLogin] = useState(loginInitialValue);
+  const { setAccount } = useContext(DataContext);
+  const navigate = useNavigate();
 
   const toggleSignup = () => {
     account === "signup" ? toggleaccount("login") : toggleaccount("signup");
@@ -94,6 +99,22 @@ const Login = () => {
     let response = await API.userlogin(login);
     if (response.isSuccess) {
       setError("");
+      //access token coming from backend will be store in session storage
+      sessionStorage.setItem(
+        "accessToken",
+        `Bearer ${response.data.accessToken}`
+      );
+      sessionStorage.setItem(
+        "refreshToken",
+        `Bearer ${response.data.refreshToken}`
+      );
+      //name and username coming from backend should not store in session staorage because we need to use it in project ahead
+      //so, we can store them globalyy using context api and reuse in project
+      setAccount({
+        username: response.data.username,
+        name: response.data.name,
+      });
+      navigate("/");
     } else {
       setError("Something Went Wrong!!!.. Please Try again");
     }
