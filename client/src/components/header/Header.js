@@ -1,5 +1,5 @@
 import React from "react";
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { AppBar, Toolbar } from "@mui/material";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 const Component = styled(AppBar)`

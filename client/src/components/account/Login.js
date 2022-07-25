@@ -56,7 +56,7 @@ const Error = styled(Typography)`
   font-weight: 600;
 `;
 
-const Login = () => {
+const Login = ({ isUserAutenticated }) => {
   const signupInitialvalue = {
     name: "",
     username: "",
@@ -114,6 +114,7 @@ const Login = () => {
         username: response.data.username,
         name: response.data.name,
       });
+      isUserAutenticated(true);
       navigate("/");
     } else {
       setError("Something Went Wrong!!!.. Please Try again");
